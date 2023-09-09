@@ -5,7 +5,7 @@ import pandas as pd
 from flask import render_template, make_response, request, Response, jsonify, json, session, redirect, url_for, \
     send_file
 import functools
-from util import solution, get_class
+from util import solution, get_class, get_categories
 import json
 
 
@@ -34,10 +34,11 @@ def post_file():
         try:
             df = pd.read_excel(file)
             if 'pr_txt' in df.columns:
-                df['res'] = df['pr_txt'].apply(get_class)
+                df['Уровень рейтинга'] = df['pr_txt'].apply(get_class)
+                df['Категория'] = df['Уровень рейтинга'].apply(get_categories)
                 new_filename = 'result.xlsx'
-                save_path = os.path.join(os.getcwd(), new_filename)
-                df[['pr_txt', 'res']].to_excel(save_path, index=False)
+                save_path = os.path.join(os.path.dirname(__file__), new_filename)
+                df[['pr_txt', 'Категория', 'Уровень рейтинга']].to_excel(save_path, index=False)
                 return send_file(save_path, download_name=new_filename)
             else:
                 return "Файл не содержит столбец 'pr_txt'", 400

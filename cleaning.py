@@ -1,4 +1,43 @@
 import re
+from pymystem3 import Mystem
+from tqdm.auto import tqdm
+from nltk.corpus import stopwords
+from nltk.stem.snowball import SnowballStemmer
+from nltk import word_tokenize
+
+stemmer = SnowballStemmer("russian")
+mystem = Mystem()
+
+russian_stopwords = stopwords.words("russian")
+russian_stopwords.extend(['…', '«', '»', '...', 'т.д.', 'т', 'д'])
+
+
+def stemming(texts):
+    stemmed_texts_list = []
+    for text in tqdm(texts):
+        try:
+            tokens = word_tokenize(text)
+            stemmed_tokens = [stemmer.stem(token) for token in tokens if token not in russian_stopwords]
+            text = " ".join(stemmed_tokens)
+            stemmed_texts_list.append(text)
+        except Exception as e:
+            print(e)
+
+    return stemmed_texts_list
+
+
+def lemmatizing(texts):
+    lemm_texts_list = []
+    for text in tqdm(texts):
+        try:
+            text_lem = mystem.lemmatize(text)
+            tokens = [token for token in text_lem if token != ' ' and token not in russian_stopwords]
+            text = " ".join(tokens)
+            lemm_texts_list.append(text)
+        except Exception as e:
+            print(e)
+
+    return lemm_texts_list
 
 
 def get_subinfo(text, start_keyword, end_keyword):
@@ -23,7 +62,7 @@ def get_agency(text):
     return agency
 
 
-def clear_nkr(text):
+def clearing_nkr(text):
     cv = get_subinfo(text, 'резюме', 'информация о рейтингуемом лице')
     info = get_subinfo(text, 'факторы, определившие уровень боск:', 'регуляторное раскрытие')
     info = ' '.join(info.split()[1:])
@@ -34,14 +73,14 @@ def clear_nkr(text):
     return text
 
 
-def clear_nra(text):
+def clearing_nra(text):
     info = get_subinfo(text, '(далее – нра, агентство)', 'дополнительная информация')
     if info is not None:
         return info
     return text
 
 
-def clear_akra(text):
+def clearing_akra(text):
     end_index = -1
     if 'регуляторное раскрытие' in text:
         end_index = text.find('регуляторное раскрытие')
@@ -50,25 +89,25 @@ def clear_akra(text):
     return text[:end_index]
 
 
-def clear_ra(text):
+def clearing_ra(text):
     info = get_subinfo(text, ' ', 'контакты для сми')
     if info is not None:
         return info
     return text
 
 
-def clear_data(text):
+def preprocessing_data(text):
     text = text.lower()
 
     agency = get_agency(text)
     if agency == 'ра':
-        text = clear_ra(text)
+        text = clearing_ra(text)
     elif agency == 'нра':
-        text = clear_nra(text)
+        text = clearing_nra(text)
     elif agency == 'акра':
-        text = clear_akra(text)
+        text = clearing_akra(text)
     elif agency == 'нкр':
-        text = clear_nkr(text)
+        text = clearing_nkr(text)
 
     text = re.sub(r'\s+', ' ', text)
     text = re.sub(r'(?<=[^\w\d])-|-(?=[^\w\d])|[^\w\d\s-]', '', text)

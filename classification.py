@@ -1,4 +1,4 @@
-from cleaning import clear_data
+from cleaning import preprocessing_data, lemmatizing, stemming
 
 import pandas as pd
 from sklearn.naive_bayes import MultinomialNB
@@ -17,9 +17,17 @@ texts = data['pr_txt']
 categories = data['Категория']
 level_ratings = data['Уровень рейтинга']
 
+stem = False
+lem = False
+
 new_texts = []
 for text in texts:
-    new_texts.append(clear_data(text))
+    tmp = preprocessing_data(text)
+    if stem:
+        tmp = stemming(tmp)
+    if lem:
+        tmp = lemmatizing(tmp)
+    new_texts.append(tmp)
 
 X_train, X_test, y_train, y_test = train_test_split(new_texts, level_ratings, test_size=0.2, random_state=42)
 
@@ -39,7 +47,8 @@ print(classification_report(y_test, y_pred, target_names=level_ratings.unique(),
 print('Linear Support Vector Machine')
 sgd = Pipeline([('vect', CountVectorizer()),
                 ('tfidf', TfidfTransformer()),
-                ('clf', SGDClassifier(loss='hinge', penalty='l2', alpha=1e-3, random_state=42, max_iter=1000, tol=None)),
+                (
+                'clf', SGDClassifier(loss='hinge', penalty='l2', alpha=1e-3, random_state=42, max_iter=1000, tol=None)),
                 ])
 sgd.fit(X_train, y_train)
 y_pred = sgd.predict(X_test)

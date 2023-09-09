@@ -1,10 +1,11 @@
-from flaskapp import app
+import os
 
+from flaskapp import app
+import pandas as pd
 from flask import render_template, make_response, request, Response, jsonify, json, session, redirect, url_for, \
     send_file
 import functools
-from werkzeug.utils import secure_filename
-from util import solution
+from util import solution, get_class, get_categories
 import json
 
 
@@ -25,6 +26,7 @@ def post_text():
         response["class"] = predicted_class
         response["weights"] = weights_dict
 
+
         return json_response(response)
 
 
@@ -32,7 +34,23 @@ def post_text():
 def post_file():
     file = request.files["file"]
 
-    return send_file(file, download_name="table.xlsx")
+    if file and file.filename.endswith('.xlsx'):
+        try:
+            df = pd.read_excel(file)
+            if 'pr_txt' in df.columns:
+                df['Уровень рейтинга'] = df['pr_txt'].apply(get_class)
+                df['Категория'] = df['Уровень рейтинга'].apply(get_categories)
+                new_filename = 'result.xlsx'
+                save_path = os.path.join(os.path.dirname(__file__), new_filename)
+                df[['pr_txt', 'Категория', 'Уровень рейтинга']].to_excel(save_path, index=False)
+                return send_file(save_path, download_name=new_filename)
+            else:
+                return "Файл не содержит столбец 'pr_txt'", 400
+        except Exception as e:
+            print(e)
+            return str(e), 500
+    else:
+        return "Файл должен быть формата .xlsx", 400
 
 
 def json_response(data, code=200):

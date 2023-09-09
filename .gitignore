@@ -43,6 +43,7 @@ htmlcov/
 .coverage
 .coverage.*
 .cache
+.idea
 nosetests.xml
 coverage.xml
 *.cover
@@ -54,6 +55,7 @@ cover/
 # Translations
 *.mo
 *.pot
+
 
 # Django stuff:
 *.log
@@ -120,6 +122,7 @@ celerybeat.pid
 *.sage.py
 
 # Environments
+venv*
 .env
 .venv
 env/

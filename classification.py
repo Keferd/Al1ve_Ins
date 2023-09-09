@@ -3,8 +3,6 @@ from preprocessing import preprocessing_data, lemmatizing, stemming, remove_stop
 import pandas as pd
 from joblib import dump
 from sklearn.pipeline import Pipeline
-from sklearn.svm import SVC
-from sklearn.linear_model import SGDClassifier
 from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.model_selection import train_test_split
@@ -44,7 +42,7 @@ logreg.fit(X_train, y_train)
 y_pred = logreg.predict(X_test)
 print('accuracy %s' % accuracy_score(y_pred, y_test))
 print(classification_report(y_test, y_pred, target_names=level_ratings.unique(), zero_division=0))
-dump(logreg, 'logistic_regression_classifier.joblib')
+dump(logreg, 'models/logistic_regression_classifier.joblib')
 
 # -----Passive Aggressive Classifier-----
 print('Passive Aggressive Classifier')
@@ -56,4 +54,4 @@ pac.fit(X_train, y_train)
 y_pred = pac.predict(X_test)
 print('accuracy %s' % accuracy_score(y_pred, y_test))
 print(classification_report(y_test, y_pred, target_names=level_ratings.unique(), zero_division=0))
-dump(pac, 'passive_aggressive_classifier.joblib')
+dump(pac, 'models/passive_aggressive_classifier.joblib')

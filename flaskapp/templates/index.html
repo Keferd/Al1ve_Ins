@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Главная</title>
+    <link rel="stylesheet" href="static/style.css">
+    <script type="text/javascript" src="/static/js/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+    <header class="header">
+        <a href="">
+            Анализатор текстовых пресс-релизов
+        </a>
+    </header>
+    <main class="main">
+        <div class="main__table">
+            <h2 class="main__table_h2">
+                Обработка таблицы данных
+            </h2>
+            <div class="main__table_field">
+                <form>
+                    <div class="input-file-row">
+                        <label class="input-file">
+                            <input class="aside__button" type="file" name="file" id="file" value="Загрузить файл"  required>
+                            <span>   Выберите файл   </span>
+                        </label>
+                        <div class="input-file-list"></div>
+                    </div>
+                    <input class="aside__button aside__button_submit" type="submit" value="Запустить">
+                </form>
+                <div id="download">
+
+                </div>
+            </div>
+        </div>
+        <div class="body__partition">
+        </div>
+        <div class="main__workspace">
+            <div class="main__half">
+                <div class="main__half__text">
+                    <div class="main__helf__h">
+                        Вход
+                    </div>
+                </div>
+                <textarea class="main__textarea" name="" id="text_in"></textarea>
+            </div>
+            <div class="main__half">
+                <div class="main__half__text">
+                    <div class="main__helf__h">
+                        Выход
+                    </div>
+                </div>
+                <div class="main__textarea_div" id="text_out">
+                    
+                </div>
+            </div>
+        </div>
+        <div class="main__bottom">
+            <div class="main__run">
+                Запустить
+            </div>
+            <div class="main__file" id="main__file">
+            </div>
+        </div>
+    </main>
+    <footer class="footer">
+        дора eSports
+    </footer>
+    
+    <script>
+        const textarea = document.getElementById('text_in');
+      
+        textarea.addEventListener('input', function () {
+          this.style.height = 'auto';
+          this.style.height = (this.scrollHeight + 2) + 'px'; 
+        });
+      
+        textarea.style.height = 'auto';
+        textarea.style.height = (textarea.scrollHeight + 2) + 'px';
+      </script>
+    <script src="static/js/timesi-normal.js"></script>
+    <script src="static/js/textsend.js"></script>
+    <script> var dt = new DataTransfer();
+ 
+        $('.input-file input[type=file]').on('change', function(){
+            let $files_list = $(this).closest('.input-file').next();
+            $files_list.empty();
+         
+            for(var i = 0; i < this.files.length; i++){
+                let new_file_input = '<div class="input-file-list-item">' +
+                    '<div class="input-file-list-item1">' + 
+                        '<span class="input-file-list-name">' + this.files.item(i).name + '</span>' + '</div>' +
+                    '<a href="#" onclick="removeFilesItem(this); return false;" class="input-file-list-remove">x</a>' +
+                    '</div>';
+                $files_list.append(new_file_input);
+                dt.items.add(this.files.item(i));
+            };
+            this.files = dt.files;
+        });
+         
+        function removeFilesItem(target){
+            let name = $(target).prev().text();
+            let input = $(target).closest('.input-file-row').find('input[type=file]');	
+            $(target).closest('.input-file-list-item').remove();	
+            for(let i = 0; i < dt.items.length; i++){
+                if(name === dt.items[i].getAsFile().name){
+                    dt.items.remove(i);
+                }
+            }
+            input[0].files = dt.files;  
+        }</script>
+    <script src="static/js/filesend.js"></script>
+</body>
+</html>

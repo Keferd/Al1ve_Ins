@@ -1,11 +1,4 @@
-import pandas as pd
 import re
-
-data = pd.read_excel('data.xlsx')
-ids = data['Id']
-texts = data['pr_txt']
-categories = data['Категория']
-level_ratings = data['Уровень рейтинга']
 
 
 def get_subinfo(text, start_keyword, end_keyword):
@@ -94,7 +87,7 @@ def clear_data(text):
         end_index = token.find(">") + 1
         if token == agency:
             tokens[i] = "<agency>"
-        elif token in ['a', 'aa', 'aaa', 'b', 'bb', 'bbb'] or 'ru' in token:
+        elif token in ['a', 'aa', 'aaa', 'b', 'bb', 'bbb', 'c', 'cc', 'ccc'] or 'ru' in token:
             tokens[i] = '<rating>'
         elif token == "-":
             tokens[i] = ""
@@ -105,11 +98,3 @@ def clear_data(text):
     text = (' '.join(tokens))
 
     return text
-
-
-new_text = []
-for txt in texts:
-    tmp = clear_data(txt)
-    print(tmp)
-    new_text.append(tmp)
-

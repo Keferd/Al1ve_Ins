@@ -45,5 +45,16 @@ def solution(text):
     for word, weight in normalized_word_weights.items():
         result_dict[word] = weight
 
-    # print(result_dict)
     return predicted_class, result_dict
+
+
+def get_class(text):
+    target_class, _ = solution(text)
+    return target_class
+
+
+def get_categories(target_class):
+    if '+' in target_class or '-' in target_class:
+        return target_class[:-1]
+    else:
+        return target_class

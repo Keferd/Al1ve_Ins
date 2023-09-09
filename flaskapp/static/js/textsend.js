@@ -23,7 +23,29 @@ sendbtn.addEventListener("click", function (e) {
 
                 const text_words = text.split(" ");
 
-                console.log(text)
+                let weights_list = ``;
+
+                weights_list = `
+                <div class="result__rating">Уровень рейтинга: <span class="result__rating_symbol">` + predicted_class + `</span></div>
+                <div class="result__partition"></div>
+                <div class="result__header">
+                    <div class="result__header_text">
+                        Значимость слов:
+                    </div>
+                </div>
+                <div class="result__lost_points">
+                `;
+
+
+                for (let id in weights) {
+                    if (weights[id] > 0.4){
+                        weights_list += `<div class="result__point"> ` + id + `:` + weights[id].toFixed(3) + `</div>`;
+                    }
+                }
+
+                weights_list += `</div>`
+
+                document.getElementById("results").innerHTML += weights_list;
 
                 for (const word of text_words) {
                     if (word in weights) {

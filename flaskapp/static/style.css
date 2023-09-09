@@ -110,6 +110,23 @@ header a:hover {
     overflow: visible;
 }
 
+.main__result_area {
+    display: flex;
+}
+
+.main_result_side {
+    box-shadow: 5px 5px 10px rgba(0,0,0,0.3);
+    border: 1px solid #b3b5b9;
+    border-radius: 10px;
+    width: 300px;
+    min-height: 300px;
+    margin-right: 20px;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
 .main__textarea_div {
     box-shadow: 5px 5px 10px rgba(0,0,0,0.3);
     border: 1px solid #b3b5b9;
@@ -171,6 +188,57 @@ header a:hover {
     padding-right: 20px;
     box-sizing: border-box;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.result__rating {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.result__rating_symbol {
+    font-size: 36px;
+}
+
+.result__partition {
+    width: 100%;
+    border-bottom: 1px solid #0c0c0c;
+    margin-bottom: 20px;   
+}
+
+.result__header {
+    margin-bottom: 10px;
+    display: flex;
+}
+
+.result__header_text {
+    border-bottom: 1px solid #0c0c0c;
+}
+
+.result__lost_points {
+    display: flex;
+    flex-direction: column;
+}
+
+.result__point {
+    margin-bottom: 5px;
+}
+
 
 
 

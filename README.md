@@ -29,15 +29,15 @@
 
 1. Убедитесь, что у вас установлен Python.
 2. Установите инструмент для создания изолированной среды Python 
-**pip install virtualenv**
-**pip install virtualenvwrapper-win**
+- **pip install virtualenv**
+- **pip install virtualenvwrapper-win**
 3. Создайте изолированную среду в Python 
-**python3 -m venv venv**
+- **python3 -m venv venv**
 4. Активируйте созданную виртуальную среду
-**venv\Scripts\activate**
+- **venv\Scripts\activate**
 5. Установите необходимые зависимости, выполнив следующую команду:
-   **pip install -r requirements.txt**
-5. Запустите приложение, выполнив следующую команду:
-   **python main.py**
+   - **pip install -r requirements.txt**
+6. Запустите приложение, выполнив следующую команду:
+   - **python main.py**
 
 После этого ваше приложение будет доступно по адресу `http://localhost:8888`.

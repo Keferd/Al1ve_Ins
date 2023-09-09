@@ -4,7 +4,7 @@ from flask import render_template, make_response, request, Response, jsonify, js
     send_file
 import functools
 from werkzeug.utils import secure_filename
-from util import solution, get_color
+from util import solution
 import json
 
 
@@ -21,10 +21,7 @@ def post_text():
     else:
         text = request.json['text']
         response, weights_dict = solution(text)
-
-        colors = []
-        for word in text.split():
-            colors.append(get_color(word, weights_dict))
+        print(weights_dict)
 
         return json_response(response)
 

@@ -47,16 +47,3 @@ def solution(text):
 
     print(result_dict)
     return predicted_class, result_dict
-
-
-def get_color(word, weights_dict):
-    new_word = preprocessing_data(word)
-    if new_word in weights_dict:
-        weight = weights_dict[new_word]
-        if weight > 0.8:
-            return 'green'
-        elif weight > 0.6:
-            return 'blue'
-        elif weight > 0.4:
-            return 'purple'
-    return "no_color"

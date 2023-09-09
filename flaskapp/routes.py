@@ -20,9 +20,10 @@ def post_text():
         return bad_request()
     else:
         text = request.json['text']
-        response, weights_dict = solution(text)
-        print(response)
-        print(weights_dict)
+        response = {}
+        predicted_class, weights_dict = solution(text)
+        response["class"] = predicted_class
+        response["weights"] = weights_dict
 
         return json_response(response)
 

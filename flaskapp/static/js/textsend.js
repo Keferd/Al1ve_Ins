@@ -29,11 +29,11 @@ sendbtn.addEventListener("click", function (e) {
                     if (word in weights) {
                         const weight = weights[word];
                         if (weight > 0.8) {
-                            new_text += `<span style="color: green">${word} </span> `;
+                            new_text += `<span style="color: white ;background-color: green">${word} </span> `;
                         } else if (weight > 0.6) {
-                            new_text += `<span style="color: blue">${word} </span> `;
+                            new_text += `<span style="color: white ;background-color: blue">${word} </span> `;
                         } else if (weight > 0.4) {
-                            new_text += `<span style="color: purple">${word} </span> `;
+                            new_text += `<span style="color: white ;background-color: purple">${word} </span> `;
                         }
                         else {
                             new_text += `${word} `

@@ -1,48 +1,51 @@
 import re
-from pymystem3 import Mystem
+import pymorphy2
 from tqdm.auto import tqdm
 from nltk.corpus import stopwords
 from nltk.stem.snowball import SnowballStemmer
 from nltk import word_tokenize, download
 
 stemmer = SnowballStemmer("russian")
-mystem = Mystem()
-
-download('punkt')
 download('stopwords')
 russian_stopwords = stopwords.words("russian")
 russian_stopwords.extend(['…', '«', '»', '...', 'т.д.', 'т', 'д'])
 
 
+def remove_stopwords(text):
+    tokens = word_tokenize(text)
+    filtered_tokens = [token for token in tokens if token not in russian_stopwords]
+    return " ".join(filtered_tokens)
+
+
 def stemming(texts):
     stemmed_texts_list = []
-    new_text = ''
-    for text in tqdm(texts):
+    for text in tqdm(texts.split()):
         try:
             tokens = word_tokenize(text)
-            stemmed_tokens = [stemmer.stem(token) for token in tokens if token not in russian_stopwords]
+            stemmed_tokens = [stemmer.stem(token) for token in tokens]
             text = " ".join(stemmed_tokens)
             stemmed_texts_list.append(text)
-            new_text = " ".join(stemmed_texts_list)
+
         except Exception as e:
             print(e)
 
+    new_text = " ".join(stemmed_texts_list)
     return new_text
 
 
 def lemmatizing(texts):
+    morph = pymorphy2.MorphAnalyzer()
     lemm_texts_list = []
-    new_text = ''
     for text in tqdm(texts):
         try:
-            text_lem = mystem.lemmatize(text)
-            tokens = [token for token in text_lem if token != ' ' and token not in russian_stopwords]
-            text = " ".join(tokens)
+            tokens = word_tokenize(text)
+            text_lem = [morph.parse(token)[0].normal_form for token in tokens]
+            text = " ".join(text_lem)
             lemm_texts_list.append(text)
-            new_text = " ".join(lemm_texts_list)
         except Exception as e:
             print(e)
 
+    new_text = " ".join(lemm_texts_list)
     return new_text
 
 
@@ -117,28 +120,29 @@ def preprocessing_data(text):
 
     text = re.sub(r'\s+', ' ', text)
     text = re.sub(r'(?<=[^\w\d])-|-(?=[^\w\d])|[^\w\d\s-]', '', text)
-    text = re.sub(r'\d+', '<number>', text)
-    text = re.sub(r'\b\d{1,2}\s\w+\s\d{4}\b', '<date>', text)
+    text = re.sub(r'\d+', '<число>', text)
+    text = re.sub(r'\b\d{1,2}\s\w+\s\d{4}\b', '<дата>', text)
     text = re.sub(r'pr@raexpert\.ru', '', text)
     text = re.sub(r'\+\d{1,2}\s\(\d{3}\)\s\d{3}-\d{2}-\d{2}', '', text)
     text = re.sub(r'https?://\S+', '', text)
     text = re.sub(r'\s+', ' ', text)
-    text = re.sub('rating', '<rating>', text)
+    text = re.sub('rating', '<рейтинг>', text)
 
     tokens = text.split()
     for i in range(len(tokens)):
         token = tokens[i]
-        start_index = token.find("<")
-        end_index = token.find(">") + 1
+
         if token == agency:
-            tokens[i] = "<agency>"
+            tokens[i] = "<агенство>"
         elif token in ['a', 'aa', 'aaa', 'b', 'bb', 'bbb', 'c', 'cc', 'ccc'] or 'ru' in token:
-            tokens[i] = '<rating>'
+            tokens[i] = '<рейтинг>'
         elif token == "-":
             tokens[i] = ""
-        elif start_index != -1:
-            if start_index != 0:
-                tokens[i] = token[start_index:end_index]
+
+        start_index = token.find("<") + 1
+        end_index = token.find(">")
+        if start_index not in [-1, 0]:
+            tokens[i] = token[start_index:end_index]
 
     text = (' '.join(tokens))
 

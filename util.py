@@ -44,6 +44,9 @@ def solution(text):
     result_dict = {}
     for word, weight in normalized_word_weights.items():
         result_dict[word] = weight
-
-    print(result_dict)
     return predicted_class, result_dict
+
+
+def get_class(text):
+    target_class, _ = solution(text)
+    return target_class

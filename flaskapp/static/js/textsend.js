@@ -23,7 +23,7 @@ sendbtn.addEventListener("click", function (e) {
 
                 const text_words = text.split(" ");
 
-                    
+                console.log(text)
 
                 for (const word of text_words) {
                     if (word in weights) {

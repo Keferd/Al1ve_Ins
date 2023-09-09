@@ -73,14 +73,15 @@ header a:hover {
     padding: 0 10px;
     flex-grow: 1;
     display: flex;
+    flex-direction: column;
 }
 
 .main__half {
-    width: 50%;
-    /* min-height: 500px; */
+    width: 100%;
+    min-height: 300px;
     display: flex;
     flex-direction: column;
-    padding: 20px;
+    padding: 20px 0; 
 }
 
 .main__half__text {
@@ -113,9 +114,8 @@ header a:hover {
     box-shadow: 5px 5px 10px rgba(0,0,0,0.3);
     border: 1px solid #b3b5b9;
     flex-grow: 1;
-    height: 100px;
     width: 100%;
-    overflow: auto;
+    height: auto;
     box-sizing: border-box;
     padding: 10px;
     font-size: 16px;
@@ -124,7 +124,7 @@ header a:hover {
 
 .main__bottom {
     margin: 20px 0;
-    height: 200px;
+    height: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -133,7 +133,6 @@ header a:hover {
 .main__run {
     width: 140px;
     padding: 0 20px;
-    margin-bottom: 50px;
     height: 40px;
     background-color: #2c5dc7;
     color: white;

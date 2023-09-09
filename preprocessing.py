@@ -3,41 +3,47 @@ from pymystem3 import Mystem
 from tqdm.auto import tqdm
 from nltk.corpus import stopwords
 from nltk.stem.snowball import SnowballStemmer
-from nltk import word_tokenize
+from nltk import word_tokenize, download
 
 stemmer = SnowballStemmer("russian")
 mystem = Mystem()
 
+download('punkt')
+download('stopwords')
 russian_stopwords = stopwords.words("russian")
 russian_stopwords.extend(['…', '«', '»', '...', 'т.д.', 'т', 'д'])
 
 
 def stemming(texts):
     stemmed_texts_list = []
+    new_text = ''
     for text in tqdm(texts):
         try:
             tokens = word_tokenize(text)
             stemmed_tokens = [stemmer.stem(token) for token in tokens if token not in russian_stopwords]
             text = " ".join(stemmed_tokens)
             stemmed_texts_list.append(text)
+            new_text = " ".join(stemmed_texts_list)
         except Exception as e:
             print(e)
 
-    return stemmed_texts_list
+    return new_text
 
 
 def lemmatizing(texts):
     lemm_texts_list = []
+    new_text = ''
     for text in tqdm(texts):
         try:
             text_lem = mystem.lemmatize(text)
             tokens = [token for token in text_lem if token != ' ' and token not in russian_stopwords]
             text = " ".join(tokens)
             lemm_texts_list.append(text)
+            new_text = " ".join(lemm_texts_list)
         except Exception as e:
             print(e)
 
-    return lemm_texts_list
+    return new_text
 
 
 def get_subinfo(text, start_keyword, end_keyword):

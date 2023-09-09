@@ -21,6 +21,7 @@ def post_text():
     else:
         text = request.json['text']
         response, weights_dict = solution(text)
+        print(response)
         print(weights_dict)
 
         return json_response(response)

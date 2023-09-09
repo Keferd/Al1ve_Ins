@@ -34,7 +34,7 @@
 3. Создайте изолированную среду в Python 
 - **python3 -m venv venv**
 4. Активируйте созданную виртуальную среду
-- **venv\Scripts\activate**
+- **venv\Scripts\activate** или **venv\Scripts\activate.bat**
 5. Установите необходимые зависимости, выполнив следующую команду:
 - **pip install -r requirements.txt**
 6. Запустите приложение, выполнив следующую команду:

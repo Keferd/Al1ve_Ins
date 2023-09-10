@@ -8,6 +8,11 @@ sendbtn.addEventListener("click", function (e) {
     let formdata = JSON.stringify({text: text, model: model});
 
     if (text != "") {
+
+        // document.getElementById("text_out").innerHTML = `
+        //     <img src="img/loadign.png" alt="loading">
+        // `;
+
         fetch("/api/text",
         {
             method: "POST",

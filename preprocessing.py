@@ -123,8 +123,8 @@ def preprocessing_data(text):
 
     text = re.sub(r'\s+', ' ', text)
     text = re.sub(r'(?<=[^\w\d])-|-(?=[^\w\d])|[^\w\d\s-]', '', text)
-    text = re.sub(r'\d+', '<число>', text)
     text = re.sub(r'\b\d{1,2}\s\w+\s\d{4}\b', '<дата>', text)
+    text = re.sub(r'\d+', '<число>', text)
     text = re.sub(r'pr@raexpert\.ru', '', text)
     text = re.sub(r'\+\d{1,2}\s\(\d{3}\)\s\d{3}-\d{2}-\d{2}', '', text)
     text = re.sub(r'https?://\S+', '', text)
@@ -136,14 +136,14 @@ def preprocessing_data(text):
         token = tokens[i]
 
         if token == agency:
-            tokens[i] = "<агенство>"
+            tokens[i] = "<агентство>"
         elif token in ['a', 'aa', 'aaa', 'b', 'bb', 'bbb', 'c', 'cc', 'ccc'] or 'ru' in token:
             tokens[i] = '<рейтинг>'
         elif token == "-":
             tokens[i] = ""
 
-        start_index = token.find("<") + 1
-        end_index = token.find(">")
+        start_index = token.find("<")
+        end_index = token.find(">") + 1
         if start_index not in [-1, 0]:
             tokens[i] = token[start_index:end_index]
 

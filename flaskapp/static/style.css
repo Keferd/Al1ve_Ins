@@ -15,6 +15,7 @@ body {
     height: 80px;
     width: 100%;
     display: flex;
+    justify-content: space-between;
     align-items: center;
     box-sizing: border-box;
     padding-left: 20px;
@@ -30,6 +31,15 @@ header a {
 
 header a:hover {
     text-decoration: underline;
+}
+
+.header__model_container {
+    display: flex;
+    margin-right: 10px;
+}
+
+.header__model_text {
+    margin-right: 10px;
 }
 
 .main {

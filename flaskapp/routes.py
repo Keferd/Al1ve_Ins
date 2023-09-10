@@ -21,6 +21,7 @@ def post_text():
         return bad_request()
     else:
         text = request.json['text']
+        model_c = request.json['model']
         response = {}
         predicted_class, weights_dict = solution(text)
         response["class"] = predicted_class

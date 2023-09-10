@@ -3,8 +3,9 @@ let sendbtn = document.querySelector(".main__run");
 sendbtn.addEventListener("click", function (e) {
     e.preventDefault();
 
+    model = document.getElementById("model").value
     text = document.getElementById("text_in").value
-    let formdata = JSON.stringify({text: text});
+    let formdata = JSON.stringify({text: text, model: model});
 
     if (text != "") {
         fetch("/api/text",

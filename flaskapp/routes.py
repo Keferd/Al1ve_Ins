@@ -21,10 +21,12 @@ def post_text():
         return bad_request()
     else:
         text = request.json['text']
+        model_c = request.json['model']
         response = {}
         predicted_class, weights_dict = solution(text)
         response["class"] = predicted_class
         response["categories"] = get_categories(predicted_class)
+
         response["weights"] = dict(sorted(weights_dict.items(), key=lambda item: item[1], reverse=True))
 
 

@@ -3,8 +3,9 @@ let sendbtn = document.querySelector(".main__run");
 sendbtn.addEventListener("click", function (e) {
     e.preventDefault();
 
+    model = document.getElementById("model").value
     text = document.getElementById("text_in").value
-    let formdata = JSON.stringify({text: text});
+    let formdata = JSON.stringify({text: text, model: model});
 
     if (text != "") {
         fetch("/api/text",
@@ -19,6 +20,7 @@ sendbtn.addEventListener("click", function (e) {
             response.json().then(function(data) {
                 predicted_class = data['class']
                 weights = data['weights']
+                categories = data['categories']
                 new_text = ''
 
                 const text_words = text.split(" ");
@@ -28,6 +30,24 @@ sendbtn.addEventListener("click", function (e) {
                 weights_list = `
                 <div class="result__rating">Уровень рейтинга: <span class="result__rating_symbol">` + predicted_class + `</span></div>
                 <div class="result__partition"></div>
+                <div class="result__rating">Категория: <span class="result__rating_symbol">` + categories + `</span></div>
+                <div class="result__partition"></div>
+                <div class="result__header">
+                    <div class="result__header_text">
+                        Значение цветов:
+                    </div>
+                </div>
+                <div class="result__classification">
+                    <div class="result__point_span result__point_span_green">
+                        Зелёный при значимости больше 0.8
+                    </div>
+                    <div class="result__point_span result__point_span_blue">
+                        Синий при значимости больше 0.6
+                    </div>
+                    <div class="result__point_span result__point_span_purple">
+                        Фиолетовый при значимости больше 0.4
+                    </div>
+                </div>
                 <div class="result__header">
                     <div class="result__header_text">
                         Значимость слов:
@@ -45,17 +65,18 @@ sendbtn.addEventListener("click", function (e) {
 
                 weights_list += `</div>`
 
-                document.getElementById("results").innerHTML += weights_list;
+                document.getElementById("results").innerHTML = weights_list;
 
                 for (const word of text_words) {
-                    if (word in weights) {
-                        const weight = weights[word];
+                    l_word = word.toLowerCase()
+                    if (l_word in weights) {
+                        const weight = weights[l_word];
                         if (weight > 0.8) {
-                            new_text += `<span style="color: white ;background-color: green">${word} </span> `;
+                            new_text += `<span class="result__point_span result__point_span_green">${word} </span> `;
                         } else if (weight > 0.6) {
-                            new_text += `<span style="color: white ;background-color: blue">${word} </span> `;
+                            new_text += `<span class="result__point_span result__point_span_blue">${word} </span> `;
                         } else if (weight > 0.4) {
-                            new_text += `<span style="color: white ;background-color: purple">${word} </span> `;
+                            new_text += `<span class="result__point_span result__point_span_purple">${word} </span> `;
                         }
                         else {
                             new_text += `${word} `

@@ -6,19 +6,28 @@
     <title>Главная</title>
     <link rel="stylesheet" href="static/style.css">
     <script type="text/javascript" src="/static/js/jquery-3.6.0.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script> -->
 </head>
 <body>
     <header class="header">
         <a href="">
             Анализатор текстовых пресс-релизов
         </a>
+        <div class="header__model_container">
+            <div class="header__model_text">
+                Модель:
+            </div>
+            <select id="model">
+                <option>logistic_regression</option>
+                <option>passive_aggressive</option>
+            </select>
+        </div>
     </header>
     <main class="main">
+        <h2 class="main__h2">
+            Обработка таблицы данных
+        </h2>
         <div class="main__table">
-            <h2 class="main__table_h2">
-                Обработка таблицы данных
-            </h2>
             <div class="main__table_field">
                 <form>
                     <div class="input-file-row">
@@ -37,6 +46,9 @@
         </div>
         <div class="body__partition">
         </div>
+        <h2 class="main__h2">
+            Обработка текста
+        </h2>
         <div class="main__workspace">
             <div class="main__half">
                 <div class="main__half__text">
@@ -85,7 +97,7 @@
         textarea.style.height = 'auto';
         textarea.style.height = (textarea.scrollHeight + 2) + 'px';
       </script>
-    <script src="static/js/timesi-normal.js"></script>
+    <!-- <script src="static/js/timesi-normal.js"></script> -->
     <script src="static/js/textsend.js"></script>
     <script> var dt = new DataTransfer();
  

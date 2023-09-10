@@ -5,14 +5,13 @@ sendfilebtn.addEventListener("click", function (e) {
 
     let input = document.getElementById("file");
     let file = input.files[0];
-    console.log(file)
     
     let formdata = new FormData();
     formdata.append('file', file);
     formdata.append('test', 'test is work');
 
 
-    if (/*formparse["file"] != ""*/ true) {
+    if (typeof file != 'undefined') {
         fetch("/api/file",
         {
             method: "POST",
@@ -35,5 +34,12 @@ sendfilebtn.addEventListener("click", function (e) {
             console.error('error:', error);
         });
         
+    }
+    else {
+        document.getElementById("download").innerHTML = `
+            <div style="color: red; margin-left: 10px">
+                Выберите файл
+            </div>
+        `
     }
 });

@@ -34,8 +34,13 @@ def normalize_word_weights(word_weights):
     return normalized_word_weights
 
 
-def solution(text):
-    model_filename = 'models/logistic_regression_classifier.joblib'
+def solution(text, model='models/logistic_regression_classifier.joblib'):
+    if model != 'models/logistic_regression_classifier.joblib':
+        if model == 'logistic_regression':
+            model = 'models/logistic_regression_classifier.joblib'
+        else:
+            model = 'models/passive_aggressive_classifier.joblib'
+    model_filename = model
     loaded_model = load_model(model_filename)
     text = preprocessing_data(text)
     predicted_class, word_weights = predict_class_and_get_word_weights(text, loaded_model)

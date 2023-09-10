@@ -23,7 +23,7 @@ def post_text():
         text = request.json['text']
         model_c = request.json['model']
         response = {}
-        predicted_class, weights_dict = solution(text)
+        predicted_class, weights_dict = solution(text, model=model_c)
         response["class"] = predicted_class
         response["categories"] = get_categories(predicted_class)
 

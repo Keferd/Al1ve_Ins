@@ -34,6 +34,22 @@ sendbtn.addEventListener("click", function (e) {
                 <div class="result__partition"></div>
                 <div class="result__header">
                     <div class="result__header_text">
+                        Значение цветов:
+                    </div>
+                </div>
+                <div class="result__classification">
+                    <div class="result__point_span result__point_span_green">
+                        Зелёный при значимости больше 0.8
+                    </div>
+                    <div class="result__point_span result__point_span_blue">
+                        Синий при значимости больше 0.6
+                    </div>
+                    <div class="result__point_span result__point_span_purple">
+                        Фиолетовый при значимости больше 0.4
+                    </div>
+                </div>
+                <div class="result__header">
+                    <div class="result__header_text">
                         Значимость слов:
                     </div>
                 </div>
@@ -56,11 +72,11 @@ sendbtn.addEventListener("click", function (e) {
                     if (l_word in weights) {
                         const weight = weights[l_word];
                         if (weight > 0.8) {
-                            new_text += `<span style="color: white ;background-color: green">${word} </span> `;
+                            new_text += `<span class="result__point_span result__point_span_green">${word} </span> `;
                         } else if (weight > 0.6) {
-                            new_text += `<span style="color: white ;background-color: blue">${word} </span> `;
+                            new_text += `<span class="result__point_span result__point_span_blue">${word} </span> `;
                         } else if (weight > 0.4) {
-                            new_text += `<span style="color: white ;background-color: purple">${word} </span> `;
+                            new_text += `<span class="result__point_span result__point_span_purple">${word} </span> `;
                         }
                         else {
                             new_text += `${word} `

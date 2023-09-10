@@ -64,7 +64,7 @@ sendbtn.addEventListener("click", function (e) {
 
                 weights_list += `</div>`
 
-                document.getElementById("results").innerHTML += weights_list;
+                document.getElementById("results").innerHTML = weights_list;
 
                 for (const word of text_words) {
                     l_word = word.toLowerCase()

@@ -24,8 +24,8 @@ sendfilebtn.addEventListener("click", function (e) {
         .then( response => {
             response.blob().then(function(data) {
                 document.getElementById("download").innerHTML = `
-                    <a href=` + URL.createObjectURL(data) + ` download="table.xlsx">
-                        <input class="aside__button" type="button" value="Скачать">
+                    <a class="aside__button_a" href=` + URL.createObjectURL(data) + ` download="table.xlsx">
+                        <input class="aside__button_download" type="button" value="Скачать">
                     </a>
                 `;
             });

@@ -19,6 +19,7 @@ sendbtn.addEventListener("click", function (e) {
             response.json().then(function(data) {
                 predicted_class = data['class']
                 weights = data['weights']
+                categories = data['categories']
                 new_text = ''
 
                 const text_words = text.split(" ");
@@ -27,6 +28,8 @@ sendbtn.addEventListener("click", function (e) {
 
                 weights_list = `
                 <div class="result__rating">Уровень рейтинга: <span class="result__rating_symbol">` + predicted_class + `</span></div>
+                <div class="result__partition"></div>
+                <div class="result__rating">Категория: <span class="result__rating_symbol">` + categories + `</span></div>
                 <div class="result__partition"></div>
                 <div class="result__header">
                     <div class="result__header_text">
@@ -48,8 +51,9 @@ sendbtn.addEventListener("click", function (e) {
                 document.getElementById("results").innerHTML += weights_list;
 
                 for (const word of text_words) {
-                    if (word in weights) {
-                        const weight = weights[word];
+                    l_word = word.toLowerCase()
+                    if (l_word in weights) {
+                        const weight = weights[l_word];
                         if (weight > 0.8) {
                             new_text += `<span style="color: white ;background-color: green">${word} </span> `;
                         } else if (weight > 0.6) {

@@ -24,6 +24,7 @@ def post_text():
         response = {}
         predicted_class, weights_dict = solution(text)
         response["class"] = predicted_class
+        response["categories"] = get_categories(predicted_class)
         response["weights"] = weights_dict
 
 

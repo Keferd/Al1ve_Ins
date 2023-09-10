@@ -26,7 +26,8 @@ def post_text():
         predicted_class, weights_dict = solution(text)
         response["class"] = predicted_class
         response["categories"] = get_categories(predicted_class)
-        response["weights"] = weights_dict
+
+        response["weights"] = dict(sorted(weights_dict.items(), key=lambda item: item[1], reverse=True))
 
 
         return json_response(response)

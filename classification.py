@@ -22,7 +22,7 @@ lem = False
 
 new_texts = []
 for text in texts:
-    tmp = remove_stopwords(preprocessing_data(text))
+    tmp = preprocessing_data(text)
     if stem:
         tmp = stemming(tmp)
     if lem:

@@ -8,7 +8,9 @@ from nltk import word_tokenize, download
 stemmer = SnowballStemmer("russian")
 download('stopwords')
 russian_stopwords = stopwords.words("russian")
-russian_stopwords.extend(['…', '«', '»', '...', 'т.д.', 'т', 'д'])
+russian_stopwords.extend(
+    ['это', 'как', 'так', 'и', 'в', 'над', 'к', 'до', 'не', 'на', 'но', 'за', 'то', 'с', 'ли', 'а', 'во', 'от', 'со',
+     'для', 'о', 'же', 'ну', 'вы', 'бы', 'что', 'кто', 'он', 'она', 'оно', 'из-за'])
 
 
 def remove_stopwords(text):
@@ -107,6 +109,7 @@ def clearing_ra(text):
 
 def preprocessing_data(text):
     text = text.lower()
+    text = remove_stopwords(text)
 
     agency = get_agency(text)
     if agency == 'ра':
